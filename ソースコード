@@ -1,0 +1,94 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class Question {
+private:
+    string text;
+    char type;
+
+public:
+    Question(string t, char ty) : text(t), type(ty) {}
+    string getText() const { return text; }
+    char getType() const { return type; }
+};
+
+class PersonalityTest {
+private:
+    vector<Question> questions;
+    int scoreI = 0, scoreE = 0;
+    int scoreN = 0, scoreS = 0;
+    int scoreT = 0, scoreF = 0;
+    int scoreJ = 0, scoreP = 0;
+
+public:
+    void setupQuestions() {
+      
+        questions.emplace_back("1. 一人の時間で心を休めることができる。(yes/no):" , 'I');
+        questions.emplace_back("2. 静かな空間が落ち着く。(yes/no):", 'I');
+        questions.emplace_back("3. 深く考える時間が好きだ。(yes/no):", 'I');
+        questions.emplace_back("4. 人と過ごすと元気が出る。(yes/no):", 'E');
+
+      
+        questions.emplace_back("5. ひらめきで行動することが多い。(yes/no):", 'N');
+        questions.emplace_back("6. データや事実を重視する。(yes/no):", 'S');
+        questions.emplace_back("7. 新しいアイデアを妄想するのが好き。(yes/no):", 'N');
+        questions.emplace_back("8. 実際に目で見たものしか信じない。(yes/no):", 'S');
+
+       
+        questions.emplace_back("9. 正しさより人の気持ちを大切にする。(yes/no):", 'F');
+        questions.emplace_back("10. 感情に寄り添った判断をする。(yes/no):", 'F');
+        questions.emplace_back("11. 論理より感情を優先することがある。(yes/no):", 'F');
+        questions.emplace_back("12. 物事は合理的に考えるべきだ。(yes/no):", 'T');
+
+       
+        questions.emplace_back("13. 予定は事前に立てたい。(yes/no):", 'J');
+        questions.emplace_back("14. 柔軟な対応を好む。(yes/no):", 'P');
+        questions.emplace_back("15. 物事を途中で変えるのは苦手。(yes/no):", 'J');
+        questions.emplace_back("16. 気分で行動することが多い。(yes/no):", 'P');
+    }
+
+    void runTest() {
+        string answer;
+        for (auto& q : questions) {
+            cout << q.getText() << endl << "";
+            cin >> answer;
+            if (answer == "yes") {
+                switch (q.getType()) {
+                    case 'I': scoreI++; break;
+                    case 'E': scoreE++; break;
+                    case 'N': scoreN++; break;
+                    case 'S': scoreS++; break;
+                    case 'T': scoreT++; break;
+                    case 'F': scoreF++; break;
+                    case 'J': scoreJ++; break;
+                    case 'P': scoreP++; break;
+                }
+            }
+        }
+    }
+
+    void showResult() const {
+        cout << "\n===== あなたのMBTIタイプは？ =====\n";
+
+        cout << (scoreI >= scoreE ? "I" : "E");
+        cout << (scoreN >= scoreS ? "N" : "S");
+        cout << (scoreT >= scoreF ? "T" : "F");
+        cout << (scoreJ >= scoreP ? "J" : "P") << endl;
+
+        cout << "\n傾向：\n";
+        cout << "- " << (scoreI >= scoreE ? "内向的" : "外向的") << endl;
+        cout << "- " << (scoreN >= scoreS ? "直感型" : "現実型") << endl;
+        cout << "- " << (scoreT >= scoreF ? "論理型" : "感情型") << endl;
+        cout << "- " << (scoreJ >= scoreP ? "計画型" : "柔軟型") << endl;
+    }
+};
+
+int main() {
+    PersonalityTest test;
+    test.setupQuestions();
+    test.runTest();
+    test.showResult();
+    return 0;
+}
